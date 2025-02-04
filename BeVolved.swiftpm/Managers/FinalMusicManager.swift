@@ -96,7 +96,7 @@ class FinalMusicManager: ObservableObject {
                     playerNodes.append(playerNode)
                     varispeedNodes.append(varispeedNode)
                 } catch {
-                    print("⚠️ Error loading track: \(track) - \(error)")
+                    print("Error loading track: \(track) - \(error)")
                 }
             }
         }
@@ -114,12 +114,6 @@ class FinalMusicManager: ObservableObject {
             if !playerNode.isPlaying {
                 playerNode.play()
             }
-        }
-    }
-    
-    func pause() {
-        for playerNode in playerNodes {
-            playerNode.pause()
         }
     }
     

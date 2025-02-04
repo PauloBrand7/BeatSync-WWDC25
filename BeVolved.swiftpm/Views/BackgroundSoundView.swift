@@ -7,7 +7,7 @@ struct BackgroundSoundView: View {
     var selectedBass: String?
     @State private var selectedBackground: String = ""
     private let soundManager = SoundManager()
-
+    
     var body: some View {
         ZStack {
             AnimatedBackground()
@@ -48,7 +48,7 @@ struct BackgroundSoundView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                     }
-
+                    
                     Button(action: {
                         selectedBackground = "nature"
                         Task {

@@ -100,7 +100,6 @@ struct FinalView: View {
             }
             .padding()
         }
-        //.navigationBarBackButtonHidden(true)
     }
     
     private func finalMessage(_ bpm: Int) -> String {
