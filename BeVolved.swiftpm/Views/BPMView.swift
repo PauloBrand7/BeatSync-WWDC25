@@ -1,9 +1,3 @@
-//
-//  BPMView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
 import AudioToolbox
 
@@ -13,7 +7,7 @@ struct BPMView: View {
     
     var body: some View {
         ZStack {
-            GradientBackground()
+            AnimatedBackground()
             
             VStack {
                 Text("Find Your Rhythm!")
@@ -24,7 +18,7 @@ struct BPMView: View {
                 
                 Spacer()
                 
-                Text("Tap the screen in sync with your heartbeat to create your music experience.")
+                Text("Tap the screen in sync with your heartbeat at least 3 times to create your music experience.")
                     .font(.system(size: 22, weight: .regular, design: .rounded))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white.opacity(0.9))
@@ -39,9 +33,10 @@ struct BPMView: View {
                     .shadow(radius: 3)
                 
                 Text(bpmMeaning(bpmUser))
-                    .font(.system(size: 20, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
-                    .padding()
+                    .font(.system(size: 20, weight: .medium))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white.opacity(0.9))
+                    .padding(.horizontal, 30)
                     .shadow(radius: 3)
                 
                 Button(action: {
@@ -98,11 +93,11 @@ struct BPMView: View {
     private func bpmMeaning(_ bpm: Int) -> String {
         switch bpm {
         case 40...84:
-            return "Relax mode activated! Enjoy the calmness."
+            return "Relax mode activated! \nEnjoy the calmness."
         case 85...109:
-            return "Balanced energy! Create a sound to keep focused."
+            return "Balanced energy! \nCreate a sound to keep focused."
         case 110...200:
-            return "High adrenaline! Perfect for an energy boost."
+            return "High adrenaline! \nPerfect for an energy boost."
         default:
             return "Set your rhythm and let the music flow!"
         }

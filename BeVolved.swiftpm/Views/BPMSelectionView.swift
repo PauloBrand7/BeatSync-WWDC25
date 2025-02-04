@@ -1,23 +1,16 @@
-//
-//  BPMSelectionView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
 
 struct BPMSelectionView: View {
-    @State private var showInfo = false
+    @State private var showWatchInfo = false
     @State private var fakeBPM: Int = 0
     @State private var timer: Timer?
     @State private var isBPMFixed = false
     
     var body: some View {
         ZStack {
-            GradientBackground()
-                .edgesIgnoringSafeArea(.all)
+            AnimatedBackground()
             
-            VStack(spacing: 40) {
+            VStack(spacing: 60) {
                 Text("Choose Your BPM Mode")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
@@ -33,7 +26,7 @@ struct BPMSelectionView: View {
                 
                 VStack(spacing: 20) {
                     NavigationLink(destination: BPMView()) {
-                        Text("Tap Manually")
+                        Text("Tap Manually 🫳")
                             .font(.system(size: 22, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(maxWidth: 280)
@@ -47,9 +40,9 @@ struct BPMSelectionView: View {
                     
                     Button(action: {
                         startFakeBPM()
-                        showInfo.toggle()
+                        showWatchInfo.toggle()
                     }) {
-                        Text("Use Apple Watch")
+                        Text("Use Apple Watch ⌚️")
                             .font(.system(size: 22, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(maxWidth: 280)
@@ -62,9 +55,9 @@ struct BPMSelectionView: View {
                     }
                 }
                 
-                if showInfo {
+                if showWatchInfo {
                     VStack(spacing: 10) {
-                        Text("Apple Watch integration is not supported in Playground. This mode will simulate BPM readings.")
+                        Text("Apple Watch integration is not supported in Playground. \nThis mode will simulate BPM measures.")
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                             .multilineTextAlignment(.center)
                             .foregroundColor(.white.opacity(0.8))
@@ -75,6 +68,8 @@ struct BPMSelectionView: View {
                             .font(.system(size: 28, weight: .semibold, design: .rounded))
                             .foregroundColor(.white)
                             .shadow(radius: 3)
+                        
+                        Spacer()
                         
                         NavigationLink(destination: TrackSelectionView(bpm: fakeBPM)) {
                             Image(systemName: "arrow.right.circle.fill")
@@ -88,7 +83,7 @@ struct BPMSelectionView: View {
                         })
                     }
                     .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.3), value: showInfo)
+                    .animation(.easeInOut(duration: 0.3), value: showWatchInfo)
                 }
                 
                 Spacer()
@@ -98,10 +93,8 @@ struct BPMSelectionView: View {
     }
     
     private func startFakeBPM() {
-        fakeBPM = Int.random(in: 60...140)
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-            fakeBPM = Int.random(in: 60...140)
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            fakeBPM = Int.random(in: 60...120)
         }
     }
     

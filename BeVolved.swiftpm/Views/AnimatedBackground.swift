@@ -1,12 +1,6 @@
-//
-//  PulsatingGradientBackground.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
 
-struct GradientBackground: View {
+struct AnimatedBackground: View {
     let color1 = Color(red: 0.1, green: 0.1, blue: 0.5)
     let color2 = Color(red: 0.7, green: 0.1, blue: 0.4)
     

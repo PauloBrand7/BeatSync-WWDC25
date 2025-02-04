@@ -1,14 +1,8 @@
-//
-//  SplashScreenView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 02/02/25.
-//
 import SwiftUI
 
 struct SplashScreenView: View {
     @State private var showWords = false
-    @State private var mergeWords = false
+    @State private var showMainTitle = false
     @State private var navigateToWelcome = false
     
     var body: some View {
@@ -16,7 +10,7 @@ struct SplashScreenView: View {
             ZStack {
                 Color.black.edgesIgnoringSafeArea(.all)
                 
-                if !mergeWords {
+                if !showMainTitle {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Be")
                             .font(.largeTitle.bold())
@@ -36,7 +30,7 @@ struct SplashScreenView: View {
                             .opacity(showWords ? 1 : 0)
                             .animation(.easeIn(duration: 0.6).delay(0.6), value: showWords)
                         
-                        Text("Beats")
+                        Text("Beat")
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
                             .opacity(showWords ? 1 : 0)
@@ -44,18 +38,18 @@ struct SplashScreenView: View {
                     }
                 }
                 
-                if mergeWords {
+                if showMainTitle {
                     Text("BeVolved")
                         .font(.system(size: 50, weight: .bold))
                         .foregroundColor(.white)
-                        .offset(y: mergeWords ? 0 : 100)
-                        .animation(.easeInOut(duration: 0.10), value: mergeWords)
+                        .offset(y: showMainTitle ? 0 : 100)
+                        .animation(.easeInOut(duration: 0.10), value: showMainTitle)
                 }
             }
             .onAppear {
                 showWords = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                    mergeWords = true
+                    showMainTitle = true
                     showWords = false
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {

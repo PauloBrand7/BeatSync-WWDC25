@@ -1,9 +1,3 @@
-//
-//  BackgroundSoundManager.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 02/02/25.
-//
 import AVFoundation
 
 actor SoundManager {
@@ -39,7 +33,7 @@ actor SoundManager {
         case "rain":
             return "rain"
         case "nature":
-            return "nature_sound"
+            return "nature"
         default:
             return type
         }

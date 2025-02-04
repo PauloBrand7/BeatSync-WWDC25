@@ -1,11 +1,4 @@
-//
-//  TrackSelectionView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
-import AudioToolbox
 
 struct TrackSelectionView: View {
     var bpm: Int
@@ -20,7 +13,7 @@ struct TrackSelectionView: View {
     
     var body: some View {
         ZStack {
-            GradientBackground()
+            AnimatedBackground()
             
             VStack {
                 Text("Choose Your Tracks")
@@ -31,7 +24,7 @@ struct TrackSelectionView: View {
                 
                 Spacer()
                 
-                Text("DRUMS")
+                Text("DRUMS 🥁")
                     .font(.system(size: 22, weight: .regular, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -44,7 +37,7 @@ struct TrackSelectionView: View {
                 
                 Spacer()
                 
-                Text("BASS")
+                Text("BASS 🎸")
                     .font(.system(size: 22, weight: .regular, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -57,7 +50,7 @@ struct TrackSelectionView: View {
                 
                 Spacer()
                 
-                Text("SYNTHS")
+                Text("SYNTHS 🎹")
                     .font(.system(size: 22, weight: .regular, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundColor(.white)

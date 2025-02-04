@@ -1,11 +1,4 @@
-//
-//  FinalView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
-import AVFoundation
 
 struct FinalView: View {
     var bpm: Int
@@ -13,33 +6,32 @@ struct FinalView: View {
     var selectedSynth: String?
     var selectedBass: String?
     var selectedBackground: String?
-
+    
     @StateObject private var audioManager = FinalMusicManager()
     @State private var isReverbEnabled = true
-
+    
     var body: some View {
         ZStack {
-            GradientBackground()
-                .edgesIgnoringSafeArea(.all)
-
+            AnimatedBackground()
+            
             VStack(spacing: 20) {
                 Spacer()
-
+                
                 Text("Harmonizing heart \n& music at \n \n\(bpm) BPM")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .shadow(radius: 5)
                     .padding(.horizontal, 20)
                     .multilineTextAlignment(.center)
-
+                
                 Text(finalMessage(bpm))
                     .font(.system(size: 18, weight: .medium, design: .rounded))
                     .foregroundColor(.white.opacity(0.75))
                     .padding(.horizontal, 30)
                     .multilineTextAlignment(.center)
-
+                
                 Spacer()
-
+                
                 HStack(spacing: 20) {
                     Button(action: {
                         audioManager.loadTracks(drums: selectedDrums, synth: selectedSynth, bass: selectedBass, background: selectedBackground)
@@ -55,20 +47,20 @@ struct FinalView: View {
                             .cornerRadius(25)
                             .shadow(radius: 5)
                     }
-
+                    
                     Button(action: { audioManager.stop() }) {
-                        Text("Pause the Vibe")
+                        Text("Stop \nthe Vibe")
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(width: 160)
-                            .background(Color.red.opacity(0.9))
+                            .background(Color.red.opacity(0.6))
                             .foregroundColor(.white)
                             .cornerRadius(25)
                             .shadow(radius: 5)
                     }
                 }
                 .padding(.bottom, 20)
-
+                
                 Toggle(isOn: $isReverbEnabled) {
                     Text("Enhance Atmosphere (Reverb)")
                         .font(.system(size: 18, weight: .medium, design: .rounded))
@@ -78,39 +70,39 @@ struct FinalView: View {
                 .onChange(of: isReverbEnabled) { enabled in
                     audioManager.reverb.bypass = !enabled
                 }
-
+                
                 if isReverbEnabled {
-                    VStack(spacing: 10) {
-                        Picker("Reverb Style", selection: $audioManager.selectedPresetName) {
+                    VStack(spacing: 30) {
+                        Picker("Reverb Style", selection: $audioManager.selectedReverbName) {
                             ForEach(audioManager.reverbPresetNames, id: \.self) { presetName in
                                 Text(presetName)
                                     .foregroundColor(.white)
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
-                        .frame(maxWidth: 250)
+                        .frame(maxWidth: 160)
                         .padding()
-                        .background(Color.white.opacity(0.15))
+                        .background(Color.white.opacity(0.70))
                         .cornerRadius(15)
-
+                        
                         VStack {
                             Slider(value: $audioManager.reverbIntensity, in: 0...100, step: 1)
                                 .accentColor(.blue)
                             Text("Intensity: \(Int(audioManager.reverbIntensity))%")
                                 .font(.system(size: 16, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.8))
+                                .foregroundColor(.white)
                         }
                         .padding(.horizontal, 30)
                     }
                 }
-
+                
                 Spacer()
             }
             .padding()
         }
         //.navigationBarBackButtonHidden(true)
     }
-
+    
     private func finalMessage(_ bpm: Int) -> String {
         switch bpm {
         case 40...84:

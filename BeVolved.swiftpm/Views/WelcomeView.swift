@@ -1,15 +1,12 @@
 //
-//  WelcomeView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
 
 struct WelcomeView: View {
+    let startBackgroundButton = LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.85), Color.purple.opacity(0.85)]), startPoint: .leading, endPoint: .trailing)
+
     var body: some View {
         ZStack {
-            GradientBackground()
+            AnimatedBackground()
             
             VStack(spacing: 30) {
                 Spacer()
@@ -22,7 +19,7 @@ struct WelcomeView: View {
                     .multilineTextAlignment(.center)
                     .transition(.opacity)
                 
-                Text("Sync your heartbeat to music to take care of your mental health. \n\nWhether you seek relaxation, focus, or a moment of mindfulness, BeVolved helps you harmonize your rhythm and find balance.")
+                Text("Sync your heartbeat to feel the music like never before. \n\nWhether you seek relaxation, focus, or a moment of mindfulness, BeVolved helps you harmonize your rhythm and find balance.")
                     .font(.system(size: 22, weight: .medium, design: .rounded))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white.opacity(0.85))
@@ -38,9 +35,7 @@ struct WelcomeView: View {
                         .font(.system(size: 22, weight: .semibold, design: .rounded))
                         .padding()
                         .frame(maxWidth: 260)
-                        .background(
-                            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.85), Color.purple.opacity(0.85)]), startPoint: .leading, endPoint: .trailing)
-                        )
+                        .background(startBackgroundButton)
                         .foregroundColor(.white)
                         .cornerRadius(30)
                         .shadow(radius: 10)

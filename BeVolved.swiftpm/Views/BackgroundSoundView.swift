@@ -1,9 +1,3 @@
-//
-//  BackgroundSoundView.swift
-//  BeVolved
-//
-//  Created by Paulo Brand on 27/01/25.
-//
 import SwiftUI
 
 struct BackgroundSoundView: View {
@@ -16,14 +10,13 @@ struct BackgroundSoundView: View {
 
     var body: some View {
         ZStack {
-            GradientBackground()
+            AnimatedBackground()
             
-            VStack(spacing: 100) {
-                Text("Choose a background sound")
+            VStack(spacing: 50) {
+                Text("Choose a background sound:")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                    .padding(.leading)
                 
                 HStack {
                     Button(action: {
@@ -32,7 +25,7 @@ struct BackgroundSoundView: View {
                             await soundManager.playBackgroundSound(type: "ocean")
                         }
                     }) {
-                        Text("Ocean")
+                        Text("Ocean \n🌊")
                             .frame(width: 100, height: 100)
                             .background(selectedBackground == "ocean-waves" ? Color.blue : Color.gray)
                             .cornerRadius(15)
@@ -47,7 +40,7 @@ struct BackgroundSoundView: View {
                             await soundManager.playBackgroundSound(type: "rain")
                         }
                     }) {
-                        Text("Rain")
+                        Text("Rain \n🌧️")
                             .frame(width: 100, height: 100)
                             .background(selectedBackground == "rain" ? Color.blue : Color.gray)
                             .cornerRadius(15)
@@ -62,7 +55,7 @@ struct BackgroundSoundView: View {
                             await soundManager.playBackgroundSound(type: "nature")
                         }
                     }) {
-                        Text("Nature")
+                        Text("Nature \n🍃")
                             .frame(width: 100, height: 100)
                             .background(selectedBackground == "nature" ? Color.blue : Color.gray)
                             .cornerRadius(15)
