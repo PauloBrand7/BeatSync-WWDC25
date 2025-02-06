@@ -1,62 +1,69 @@
 import SwiftUI
 
 struct BPMSelectionView: View {
-    @State private var showWatchInfo = false
-    @State private var fakeBPM: Int = 0
+    @State private var showAppleWatchBPM = false
+    @State private var fakeBPM = 0
     @State private var timer: Timer?
-    @State private var isBPMFixed = false
     
     var body: some View {
         ZStack {
-            AnimatedBackground()
+            DesignResources.AnimatedBackground()
             
-            VStack(spacing: 60) {
+            VStack {
                 Text("Choose Your BPM Mode")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                    .shadow(radius: 5)
-                    .padding(.top, 50)
-                
-                Text("Select how you want to measure your heartbeat.")
-                    .font(.system(size: 22, weight: .medium, design: .rounded))
+                    .font(DesignResources.TextStyles.titleFont)
+                    .foregroundColor(DesignResources.TextStyles.titleColor)
+                    .shadow(radius: 10)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.white.opacity(0.9))
-                    .padding(.horizontal, 30)
-                    .shadow(radius: 3)
+                    .padding(.top, 100)
+                
+                Text("How do you prefer to measure your heartbeat?")
+                    .font(DesignResources.TextStyles.textFont)
+                    .foregroundColor(DesignResources.TextStyles.textColor)
+                    .shadow(radius: 8)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
                 
                 VStack(spacing: 20) {
                     NavigationLink(destination: BPMView()) {
-                        Text("Tap Manually 🫳")
-                            .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        Text("Touching the screen 🫳")
+                            .font(DesignResources.TextStyles.textFont)
+                            .foregroundColor(DesignResources.TextStyles.textColor)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 40)
                             .padding()
                             .frame(maxWidth: 280)
                             .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.85), Color.purple.opacity(0.85)]), startPoint: .leading, endPoint: .trailing)
+                                DesignResources.ButtonStyles.backgroundDefaultButton
                             )
-                            .foregroundColor(.white)
                             .cornerRadius(30)
                             .shadow(radius: 10)
                     }
                     
                     Button(action: {
+                        stopFakeBPM()
                         startFakeBPM()
-                        showWatchInfo.toggle()
+                        showAppleWatchBPM.toggle()
                     }) {
-                        Text("Use Apple Watch ⌚️")
-                            .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        Text("Using Apple Watch Data ⌚️")
+                            .font(DesignResources.TextStyles.textFont)
+                            .foregroundColor(DesignResources.TextStyles.textColor)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 40)
                             .padding()
                             .frame(maxWidth: 280)
                             .background(
-                                LinearGradient(gradient: Gradient(colors: [Color.green.opacity(0.85), Color.teal.opacity(0.85)]), startPoint: .leading, endPoint: .trailing)
+                                DesignResources.ButtonStyles.backgroundAppleWatchButton
                             )
-                            .foregroundColor(.white)
                             .cornerRadius(30)
                             .shadow(radius: 10)
                     }
                 }
                 
-                if showWatchInfo {
-                    VStack(spacing: 10) {
+                Spacer()
+                
+                if showAppleWatchBPM {
+                    VStack {
                         Text("Apple Watch integration is not supported in Playground. \nThis mode will simulate BPM measures.")
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                             .multilineTextAlignment(.center)
@@ -69,27 +76,16 @@ struct BPMSelectionView: View {
                             .foregroundColor(.white)
                             .shadow(radius: 3)
                         
-                        Spacer()
-                        
                         NavigationLink(destination: TrackSelectionView(bpm: fakeBPM)) {
-                            Image(systemName: "arrow.right.circle.fill")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.white.opacity(0.9))
-                                .shadow(radius: 5)
+                            DesignResources.nextButton()
                         }
                         .simultaneousGesture(TapGesture().onEnded {
                             stopFakeBPM()
                         })
                     }
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.3), value: showWatchInfo)
                 }
-                
-                Spacer()
             }
         }
-        .navigationBarBackButtonHidden(true)
     }
     
     private func startFakeBPM() {
@@ -101,5 +97,6 @@ struct BPMSelectionView: View {
     private func stopFakeBPM() {
         timer?.invalidate()
         timer = nil
+        showAppleWatchBPM = false
     }
 }

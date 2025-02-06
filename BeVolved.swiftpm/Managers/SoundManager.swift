@@ -3,10 +3,11 @@ import AVFoundation
 actor SoundManager {
     private var player: AVAudioPlayer?
     
-    func playBackgroundSound(type: String) async {
-        let soundName = getLocalSoundFile(type: type)
+    func playBackgroundSound(soundName: String) async {
         
-        guard let soundURL = Bundle.main.url(forResource: soundName, withExtension: "mp3") else {
+        guard let soundURL = Bundle.main.url(
+            forResource: soundName, withExtension: "mp3"
+        ) else {
             print("Sound file not found: \(soundName)")
             return
         }
@@ -24,18 +25,5 @@ actor SoundManager {
     func stop() {
         player?.stop()
         player = nil
-    }
-    
-    private func getLocalSoundFile(type: String) -> String {
-        switch type {
-        case "ocean":
-            return "ocean-waves"
-        case "rain":
-            return "rain"
-        case "nature":
-            return "nature"
-        default:
-            return type
-        }
     }
 }

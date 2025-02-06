@@ -1,48 +1,43 @@
-//
 import SwiftUI
 
 struct WelcomeView: View {
-    let startBackgroundButton = LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.85), Color.purple.opacity(0.85)]), startPoint: .leading, endPoint: .trailing)
-
+    private let title = "Welcome to BeVolved!"
+    private let text = "Sync your heartbeat to feel the music. \n\nWhether you’re looking to relax, focus, or just tune yourself, BeVolved helps you find your perfect rhythm."
+    
     var body: some View {
         ZStack {
-            AnimatedBackground()
+            DesignResources.AnimatedBackground()
             
             VStack(spacing: 30) {
                 Spacer()
                 
-                Text("Welcome to BeVolved!")
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
+                Text(title)
+                    .font(DesignResources.TextStyles.titleFont)
+                    .foregroundColor(DesignResources.TextStyles.titleColor)
                     .shadow(radius: 10)
-                    .padding(.horizontal, 20)
                     .multilineTextAlignment(.center)
-                    .transition(.opacity)
                 
-                Text("Sync your heartbeat to feel the music like never before. \n\nWhether you seek relaxation, focus, or a moment of mindfulness, BeVolved helps you harmonize your rhythm and find balance.")
-                    .font(.system(size: 22, weight: .medium, design: .rounded))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white.opacity(0.85))
-                    .padding(.horizontal, 40)
+                Text(text)
+                    .font(DesignResources.TextStyles.textFont)
+                    .foregroundColor(DesignResources.TextStyles.textColor)
                     .shadow(radius: 8)
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 1.2), value: 1)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
                 
                 Spacer()
                 
                 NavigationLink(destination: BPMSelectionView()) {
                     Text("Start")
-                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        .font(DesignResources.TextStyles.textFont)
+                        .foregroundColor(DesignResources.TextStyles.textColor)
                         .padding()
                         .frame(maxWidth: 260)
-                        .background(startBackgroundButton)
-                        .foregroundColor(.white)
+                        .background(                                DesignResources.ButtonStyles.backgroundDefaultButton
+                        )
                         .cornerRadius(30)
                         .shadow(radius: 10)
                         .padding(.bottom, 50)
                 }
-                .transition(.opacity)
-                .animation(.easeInOut(duration: 1.5), value: 1)
             }
         }
         .navigationBarBackButtonHidden(true)

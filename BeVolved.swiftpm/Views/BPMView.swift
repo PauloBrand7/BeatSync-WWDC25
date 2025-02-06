@@ -2,28 +2,33 @@ import SwiftUI
 import AudioToolbox
 
 struct BPMView: View {
+    @State private var showNextButton = false
     @State private var taps: [Date] = []
     @State private var bpmUser: Int = 0
     
     var body: some View {
         ZStack {
-            AnimatedBackground()
+            DesignResources.AnimatedBackground()
             
             VStack {
-                Text("Find Your Rhythm!")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
+                Text("Let's Find Your Rhythm!")
+                    .font(DesignResources.TextStyles.titleFont)
+                    .foregroundColor(DesignResources.TextStyles.titleColor)
+                    .shadow(radius: 10)
+                    .multilineTextAlignment(.center)
                     .padding(.top, 50)
                     .shadow(radius: 5)
                 
                 Spacer()
                 
-                Text("Tap the screen in sync with your heartbeat at least 3 times to create your music experience.")
-                    .font(.system(size: 22, weight: .regular, design: .rounded))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white.opacity(0.9))
-                    .padding(.horizontal, 30)
-                    .shadow(radius: 3)
+                if !showNextButton {
+                    Text("Tap the screen in sync with your heartbeat at least 5 times to find your beat.")
+                        .font(DesignResources.TextStyles.textFont)
+                        .foregroundColor(DesignResources.TextStyles.textColor)
+                        .shadow(radius: 8)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 40)
+                }
                 
                 Spacer()
                 
@@ -36,6 +41,7 @@ struct BPMView: View {
                     .font(.system(size: 20, weight: .medium))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white.opacity(0.9))
+                    .padding(.top, 10)
                     .padding(.horizontal, 30)
                     .shadow(radius: 3)
                 
@@ -47,8 +53,8 @@ struct BPMView: View {
                     Text("Tap Here")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .padding()
-                        .frame(width: 300, height: 300)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.red.opacity(0.3), Color.blue.opacity(0.8)]), startPoint: .leading, endPoint: .trailing))
+                        .frame(width: 250, height: 250)
+                        .background(DesignResources.ButtonStyles.backgroundDefaultButton)
                         .foregroundColor(.white)
                         .cornerRadius(20)
                         .shadow(radius: 5)
@@ -57,49 +63,55 @@ struct BPMView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: TrackSelectionView(bpm: bpmUser)) {
-                    Image(systemName: "arrow.right.circle.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.white.opacity(0.9))
-                        .shadow(radius: 5)
+                if showNextButton {
+                    NavigationLink(destination: TrackSelectionView(bpm: bpmUser)) {
+                        DesignResources.nextButton()
+                    }
+                    .padding(.bottom, 50)
                 }
-                .padding(.bottom, 50)
             }
         }
     }
     
     private func recordTap() {
-        taps.append(Date())
-        if taps.count > 5 {
-            taps.removeFirst()
-        }
     }
     
     private func calculateBPM() {
-        guard taps.count >= 3 else { return }
+        taps.append(Date())
+        // To keep only the last 5 taps.
+        if taps.count > 5 {
+            taps.removeFirst()
+        }
+        
+        //At least 5 taps to calculate
+        guard taps.count >= 5 else { return }
+        showNextButton = true
         var intervals: [TimeInterval] = []
+        
         for i in 1..<taps.count {
             let interval = taps[i].timeIntervalSince(taps[i - 1])
+            // Ignoring taps that are too fast or too slow
             if interval >= 0.2 && interval <= 2.0 {
                 intervals.append(interval)
             }
         }
         guard !intervals.isEmpty else { return }
         let averageInterval = intervals.reduce(0, +) / Double(intervals.count)
-        bpmUser = Int(80 / averageInterval)
+        bpmUser = Int(60 / averageInterval)
     }
     
     private func bpmMeaning(_ bpm: Int) -> String {
         switch bpm {
         case 40...84:
-            return "Relax mode activated! \nEnjoy the calmness."
+            return "Relaxed rhythm! \nYour song will slow down."
         case 85...109:
-            return "Balanced energy! \nCreate a sound to keep focused."
+            return "Balanced rhythm! \nNice, you're right on beat."
         case 110...200:
-            return "High adrenaline! \nPerfect for an energy boost."
+            return "High rhythm! \nWhoa, you need a fast song!"
+        case 201...:
+            return "KEEP CALM! \nYou're going too fast..."
         default:
-            return "Set your rhythm and let the music flow!"
+            return "Waiting for your rhythm..."
         }
     }
 }

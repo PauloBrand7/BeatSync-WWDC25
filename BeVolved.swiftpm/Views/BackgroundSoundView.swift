@@ -10,58 +10,66 @@ struct BackgroundSoundView: View {
     
     var body: some View {
         ZStack {
-            AnimatedBackground()
+            DesignResources.AnimatedBackground()
             
             VStack(spacing: 50) {
+                Text("One more thing...")
+                    .font(DesignResources.TextStyles.titleFont)
+                    .foregroundColor(DesignResources.TextStyles.titleColor)
+                    .shadow(radius: 10)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 50)
+                
                 Text("Choose a background sound:")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .font(DesignResources.TextStyles.textFont)
+                    .foregroundColor(DesignResources.TextStyles.textColor)
+                    .shadow(radius: 10)
+                    .multilineTextAlignment(.center)
                 
                 HStack {
                     Button(action: {
-                        selectedBackground = "ocean-waves"
+                        selectedBackground = "ocean"
                         Task {
-                            await soundManager.playBackgroundSound(type: "ocean")
+                            await soundManager.playBackgroundSound(soundName: "ocean")
                         }
                     }) {
                         Text("Ocean \n🌊")
                             .frame(width: 100, height: 100)
-                            .background(selectedBackground == "ocean-waves" ? Color.blue : Color.gray)
+                            .background(selectedBackground == "ocean" ? Color.blue : Color.cyan.opacity(0.4))
                             .cornerRadius(15)
-                            .font(.system(size: 22, weight: .regular, design: .rounded))
+                            .font(DesignResources.TextStyles.textFont)
+                            .foregroundColor(DesignResources.TextStyles.textColor)
                             .fontWeight(.bold)
-                            .foregroundColor(.white)
                     }
                     
                     Button(action: {
                         selectedBackground = "rain"
                         Task {
-                            await soundManager.playBackgroundSound(type: "rain")
+                            await soundManager.playBackgroundSound(soundName: "rain")
                         }
                     }) {
                         Text("Rain \n🌧️")
                             .frame(width: 100, height: 100)
-                            .background(selectedBackground == "rain" ? Color.blue : Color.gray)
+                            .background(selectedBackground == "rain" ? Color.blue : Color.cyan.opacity(0.4))
                             .cornerRadius(15)
-                            .font(.system(size: 22, weight: .regular, design: .rounded))
+                            .font(DesignResources.TextStyles.textFont)
+                            .foregroundColor(DesignResources.TextStyles.textColor)
                             .fontWeight(.bold)
-                            .foregroundColor(.white)
                     }
                     
                     Button(action: {
                         selectedBackground = "nature"
                         Task {
-                            await soundManager.playBackgroundSound(type: "nature")
+                            await soundManager.playBackgroundSound(soundName: "nature")
                         }
                     }) {
                         Text("Nature \n🍃")
                             .frame(width: 100, height: 100)
-                            .background(selectedBackground == "nature" ? Color.blue : Color.gray)
+                            .background(selectedBackground == "nature" ? Color.blue : Color.cyan.opacity(0.4))
                             .cornerRadius(15)
-                            .font(.system(size: 22, weight: .regular, design: .rounded))
+                            .font(DesignResources.TextStyles.textFont)
+                            .foregroundColor(DesignResources.TextStyles.textColor)
                             .fontWeight(.bold)
-                            .foregroundColor(.white)
                     }
                 }
                 
@@ -72,11 +80,7 @@ struct BackgroundSoundView: View {
                     .shadow(radius: 3)
                 
                 NavigationLink(destination: FinalView(bpm: bpm, selectedDrums: selectedDrums, selectedSynth: selectedSynth, selectedBass: selectedBass, selectedBackground: selectedBackground)) {
-                    Image(systemName: "arrow.right.circle.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.white.opacity(0.9))
-                        .shadow(radius: 5)
+                    DesignResources.nextButton()
                 }
                 .padding(.bottom, 40)
             }
@@ -89,12 +93,12 @@ struct BackgroundSoundView: View {
     
     private func backgroundMeaning(_ track: String) -> String {
         switch track {
-        case "ocean-waves":
-            return "Calming waves for relaxation."
+        case "ocean":
+            return "Calming ocean waves."
         case "rain":
-            return "Soft drizzles to enhance focus."
+            return "A soft rain falling."
         case "nature":
-            return "Soothing sounds to relieve stress."
+            return "Birds, drops, and a gentle breeze."
         default:
             return ""
         }

@@ -12,21 +12,34 @@ struct FinalView: View {
     
     var body: some View {
         ZStack {
-            AnimatedBackground()
+            DesignResources.AnimatedBackground()
             
             VStack(spacing: 20) {
                 Spacer()
                 
-                Text("Harmonizing heart \n& music at \n \n\(bpm) BPM")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
+                Text("Your song is done!")
+                    .font(DesignResources.TextStyles.titleFont)
+                    .foregroundColor(DesignResources.TextStyles.titleColor)
+                    .shadow(radius: 5)
+                    .padding(.horizontal, 20)
+                    .multilineTextAlignment(.center)
+                
+                Text("Harmonizing with your heart at:")
+                    .font(DesignResources.TextStyles.textFont)
+                    .foregroundColor(DesignResources.TextStyles.textColor)
+                    .padding(.horizontal, 30)
+                    .multilineTextAlignment(.center)
+                
+                Text("\(bpm) BPM")
+                    .font(DesignResources.TextStyles.titleFont)
+                    .foregroundColor(DesignResources.TextStyles.titleColor)
                     .shadow(radius: 5)
                     .padding(.horizontal, 20)
                     .multilineTextAlignment(.center)
                 
                 Text(finalMessage(bpm))
-                    .font(.system(size: 18, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.75))
+                    .font(DesignResources.TextStyles.textFont)
+                    .foregroundColor(DesignResources.TextStyles.textColor)
                     .padding(.horizontal, 30)
                     .multilineTextAlignment(.center)
                 
@@ -38,18 +51,18 @@ struct FinalView: View {
                         audioManager.adjustRate(for: bpm)
                         audioManager.play()
                     }) {
-                        Text("Feel the Sound")
+                        Text("Play song")
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(width: 160)
-                            .background(LinearGradient(colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.9)], startPoint: .leading, endPoint: .trailing))
+                            .background(DesignResources.ButtonStyles.backgroundDefaultButton)
                             .foregroundColor(.white)
                             .cornerRadius(25)
                             .shadow(radius: 5)
                     }
                     
                     Button(action: { audioManager.stop() }) {
-                        Text("Stop \nthe Vibe")
+                        Text("Stop Vibe")
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(width: 160)
@@ -63,7 +76,7 @@ struct FinalView: View {
                 
                 Toggle(isOn: $isReverbEnabled) {
                     Text("Enhance Atmosphere (Reverb)")
-                        .font(.system(size: 18, weight: .medium, design: .rounded))
+                        .font(.system(size: 20, weight: .medium, design: .rounded))
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal, 30)
@@ -89,13 +102,12 @@ struct FinalView: View {
                             Slider(value: $audioManager.reverbIntensity, in: 0...100, step: 1)
                                 .accentColor(.blue)
                             Text("Intensity: \(Int(audioManager.reverbIntensity))%")
-                                .font(.system(size: 16, weight: .medium, design: .rounded))
+                                .font(.system(size: 18, weight: .medium, design: .rounded))
                                 .foregroundColor(.white)
                         }
                         .padding(.horizontal, 30)
                     }
                 }
-                
                 Spacer()
             }
             .padding()
@@ -105,13 +117,13 @@ struct FinalView: View {
     private func finalMessage(_ bpm: Int) -> String {
         switch bpm {
         case 40...84:
-            return "A calming rhythm for your mind. Breathe, reflect, and restore balance."
+            return "A calming rhythm for your mind!"
         case 85...109:
-            return "A smooth harmony for focus and clarity. Stay present and embrace the moment."
+            return "A harmony for focus!"
         case 110...200:
-            return "A powerful beat for energy and motivation. Let the rhythm drive your passion!"
+            return "A beat for motivation!"
         default:
-            return "Your sound, your story. Let your heartbeat inspire innovation."
+            return "Let your heartbeat inspire."
         }
     }
 }
