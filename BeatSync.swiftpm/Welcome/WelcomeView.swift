@@ -32,8 +32,7 @@ struct WelcomeView: View {
                         .foregroundColor(DesignResources.TextStyles.textColor)
                         .padding()
                         .frame(maxWidth: 260)
-                        .background(                                DesignResources.ButtonStyles.backgroundDefaultButton
-                        )
+                        .background(DesignResources.ButtonStyles.backgroundDefaultButton)
                         .cornerRadius(30)
                         .shadow(radius: 10)
                         .padding(.bottom, 50)

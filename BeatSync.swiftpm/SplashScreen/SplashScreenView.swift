@@ -29,12 +29,6 @@ struct SplashScreenView: View {
                             .foregroundColor(.white)
                             .opacity(showWords ? 1 : 0)
                             .animation(.easeIn(duration: 0.6).delay(1.4), value: showWords)
-                        
-//                        Text("Beat")
-//                            .font(.largeTitle.bold())
-//                            .foregroundColor(.white)
-//                            .opacity(showWords ? 1 : 0)
-//                            .animation(.easeIn(duration: 0.6).delay(0.8), value: showWords)
                     }
                 }
                 

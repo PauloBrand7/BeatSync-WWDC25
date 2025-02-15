@@ -9,6 +9,7 @@ struct FinalView: View {
     
     @ObservedObject private var audioManager = FinalMusicManager()
     @State private var isReverbEnabled = true
+    @State private var isPlaying = false
     
     var body: some View {
         ZStack {
@@ -51,9 +52,12 @@ struct FinalView: View {
                 
                 HStack(spacing: 20) {
                     Button(action: {
-                        audioManager.loadTracks(drums: selectedDrums, synth: selectedSynth, bass: selectedBass, background: selectedBackground)
-                        audioManager.adjustRate(for: bpm)
-                        audioManager.play()
+                        if !isPlaying {
+                            audioManager.loadTracks(drums: selectedDrums, synth: selectedSynth, bass: selectedBass, background: selectedBackground)
+                            audioManager.adjustRate(for: bpm)
+                            audioManager.play()
+                            isPlaying = true
+                        }
                     }) {
                         Text("Play song")
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
@@ -65,7 +69,10 @@ struct FinalView: View {
                             .shadow(radius: 5)
                     }
                     
-                    Button(action: { audioManager.stop() }) {
+                    Button(action: {
+                        audioManager.stop()
+                        isPlaying = false
+                    }) {
                         Text("Stop Vibe")
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding()
@@ -93,13 +100,12 @@ struct FinalView: View {
                         Picker("Reverb Style", selection: $audioManager.selectedReverbName) {
                             ForEach(audioManager.reverbPresetNames, id: \.self) { presetName in
                                 Text(presetName)
-                                    .foregroundColor(.white)
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
                         .frame(maxWidth: 160)
                         .padding()
-                        .background(Color.white.opacity(0.70))
+                        .background(Color.white.opacity(0.80))
                         .cornerRadius(15)
                         
                         VStack {
@@ -109,12 +115,15 @@ struct FinalView: View {
                                 .font(.system(size: 18, weight: .medium, design: .rounded))
                                 .foregroundColor(.white)
                         }
-                        .padding(.horizontal, 30)
                     }
+                    .padding(.horizontal, 80)
                 }
                 Spacer()
             }
             .padding()
+        }.onDisappear {
+            audioManager.stop()
+            isPlaying = false
         }
     }
     

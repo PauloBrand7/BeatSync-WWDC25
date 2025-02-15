@@ -2,7 +2,7 @@ import SwiftUI
 
 struct BPMSelectionView: View {
     @State private var showAppleWatchBPM = false
-    @State private var fakeBPM = 80 //default BPM of tracks
+    @State private var fakeBPM = 80 //default BPM tracks
     @State private var timer: Timer?
     
     var body: some View {
@@ -75,7 +75,7 @@ struct BPMSelectionView: View {
                         .foregroundColor(.white)
                         .shadow(radius: 3)
                     
-                    NavigationLink(destination: TrackSelectionView(bpm: fakeBPM)) {
+                    NavigationLink(destination: InstrumentsView(bpm: fakeBPM)) {
                         DesignResources.nextButton()
                     }
                     .simultaneousGesture(TapGesture().onEnded {

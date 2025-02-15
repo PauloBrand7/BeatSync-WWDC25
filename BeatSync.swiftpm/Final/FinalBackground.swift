@@ -45,7 +45,12 @@ struct FinalBackground: UIViewRepresentable {
         backgroundNode.position = backgroundPosition
         scene.rootNode.addChildNode(backgroundNode)
         
-        let heartNode = createHeartNode()
+        guard let heart = SCNScene(named: "heart.usdz") else {
+            print("Error to load heart")
+            return scene
+        }
+
+        let heartNode = heart.rootNode
         coordinator.heartNode = heartNode
         scene.rootNode.addChildNode(heartNode)
         
@@ -67,42 +72,20 @@ struct FinalBackground: UIViewRepresentable {
     
     private func createBackgroundNode() -> SCNNode {
         let sphere = SCNSphere(radius: backgroundRadius)
-        sphere.isGeodesic = true
-        
         if let bgImage = UIImage(named: "background") {
             let material = SCNMaterial()
             material.diffuse.contents = bgImage
             material.isDoubleSided = true
             material.lightingModel = .constant
-            material.diffuse.wrapS = .mirror
-            material.diffuse.wrapT = .mirror
             sphere.materials = [material]
         }
         
         return SCNNode(geometry: sphere)
     }
     
-    private func createHeartNode() -> SCNNode {
-        guard let heartScene = SCNScene(named: "heart.usdz") else {
-            print("Não foi possível carregar heart.usdz")
-            return SCNNode()
-        }
-        
-        let containerNode = SCNNode()
-        heartScene.rootNode.childNodes.forEach { containerNode.addChildNode($0) }
-        
-        let (min, max) = containerNode.boundingBox
-        let center = SCNVector3((min.x + max.x) / 2, (min.y + max.y) / 2, (min.z + max.z) / 2)
-        containerNode.pivot = SCNMatrix4MakeTranslation(center.x, center.y, center.z)
-        containerNode.scale = SCNVector3(baseScale, baseScale, baseScale)
-        
-        return containerNode
-    }
-    
     private func createCameraNode(target: SCNNode) -> SCNNode {
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
-        cameraNode.camera?.usesOrthographicProjection = false
         cameraNode.camera?.fieldOfView = cameraFOV
         cameraNode.position = cameraPosition
         

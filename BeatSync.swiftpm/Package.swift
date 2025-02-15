@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "BeatSync",
             targets: ["AppModule"],
-            bundleIdentifier: "com.paulobrand.BeVolved",
+            bundleIdentifier: "com.paulobrand.BeatSync",
             teamIdentifier: "4SXCBD83UC",
             displayVersion: "1.0",
             bundleVersion: "1",

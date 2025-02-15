@@ -63,7 +63,7 @@ struct BPMView: View {
                 Spacer()
                 
                 if showNextButton {
-                    NavigationLink(destination: TrackSelectionView(bpm: bpmUser)) {
+                    NavigationLink(destination: InstrumentsView(bpm: bpmUser)) {
                         DesignResources.nextButton()
                     }
                     .padding(.bottom, 50)
@@ -75,7 +75,7 @@ struct BPMView: View {
     private func calculateBPM() {
         taps.append(Date())
         // To keep only the last 3 taps to calculate.
-        if taps.count > 5 {
+        if taps.count > 3 {
             taps.removeFirst()
         }
         

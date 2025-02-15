@@ -8,6 +8,7 @@ class FinalMusicManager: ObservableObject {
     private var mixer = AVAudioMixerNode()
     var reverb = AVAudioUnitReverb()
     
+    // default reverb config
     @Published var selectedReverbName: String = "Medium Hall" {
         didSet {
             if let preset = reverbPresetMapping[selectedReverbName] {
@@ -144,6 +145,7 @@ class FinalMusicManager: ObservableObject {
             print("FFT setup error")
             return
         }
+        // store fft values
         var realp = [Float](repeating: 0.0, count: fftSize / 2)
         var imagp = [Float](repeating: 0.0, count: fftSize / 2)
         var splitComplex = DSPSplitComplex(realp: &realp, imagp: &imagp)
@@ -151,10 +153,12 @@ class FinalMusicManager: ObservableObject {
             vDSP_ctoz(pointer, 2, &splitComplex, 1, vDSP_Length(fftSize / 2))
         }
         vDSP_fft_zrip(fftSetup, &splitComplex, 1, log2n, FFTDirection(FFT_FORWARD))
-        let lowFrequencyEnergy = (0..<5).reduce(0) { $0 + hypot(splitComplex.realp[$1], splitComplex.imagp[$1]) }
+        
+        // get audio low frequency
+        let lowFrequency = (0..<5).reduce(0) { $0 + hypot(splitComplex.realp[$1], splitComplex.imagp[$1]) }
         vDSP_destroy_fftsetup(fftSetup)
         DispatchQueue.main.async {
-            self.audioLevels = [lowFrequencyEnergy]
+            self.audioLevels = [lowFrequency]
         }
     }
 }

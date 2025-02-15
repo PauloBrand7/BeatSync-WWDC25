@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TrackSelectionView: View {
+struct InstrumentsView: View {
     var bpm: Int
     @State private var selectedDrums: String? = nil
     @State private var selectedSynth: String? = nil
