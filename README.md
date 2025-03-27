@@ -1,6 +1,5 @@
-# BeatSync (WWDC2025)
-
-![BeatSync Logo](link_to_image)
+# BeatSync (WWDC2025) 
+<img src="assets/logo.png" alt="BeatSync Logo" width="150"/>
 
 ## 🏆 Swift Student Challenge Winner 2025
 BeatSync is an award-winning project recognized in the **Swift Student Challenge 2025** by Apple! This app synchronizes music with the user's heart rate, creating a fully personalized sound experience. Built with **SwiftUI** and **AVFoundation**, it allows users to adjust and modify music tracks based on their BPM in real-time.
@@ -15,8 +14,8 @@ BeatSync is an award-winning project recognized in the **Swift Student Challenge
 ## 🛠️ Technologies Used
 - **SwiftUI** for UI development
 - **AVFoundation** for audio processing
-- **HealthKit & WorkoutKit** for heart rate tracking
-- **WatchConnectivity** for Apple Watch communication
+- **AudioToolbox** for additional audio functionality
+- **SceneKit** for 3D music immersion
 
 ## 🚀 How to Run the Project
 1. Clone the repository:
@@ -28,12 +27,11 @@ BeatSync is an award-winning project recognized in the **Swift Student Challenge
 4. Run and experience real-time BPM-based music synchronization! 🎶
 
 ## 📸 Screenshots
-
+<div>
+  <img src="assets/heartrate_screenshot.png" width="300" style="display: inline-block; margin-right: 10px;"/>
+  <img src="assets/launchpad_screenshot.png" width="300" style="display: inline-block; margin-right: 10px;"/>
+  <img src="assets/player_screenshot.png" width="300" style="display: inline-block;"/>
+</div>
 
 ## 📜 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-🔗 **Want to know more?** Follow me on [GitHub](https://github.com/yourusername) for updates on BeatSync!
-
