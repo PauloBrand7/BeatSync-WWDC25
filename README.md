@@ -28,6 +28,7 @@ BeatSync is an award-winning project recognized in the **Swift Student Challenge
 
 ## 📸 Screenshots
 <div>
+  <img src="assets/start_screenshot.png" width="300" style="display: inline-block; margin-right: 10px;"/>
   <img src="assets/heartrate_screenshot.png" width="300" style="display: inline-block; margin-right: 10px;"/>
   <img src="assets/launchpad_screenshot.png" width="300" style="display: inline-block; margin-right: 10px;"/>
   <img src="assets/player_screenshot.png" width="300" style="display: inline-block;"/>
